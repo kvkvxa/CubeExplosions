@@ -2,27 +2,21 @@ using UnityEngine;
 
 public class DividingChanceCalculator : MonoBehaviour
 {
-    [SerializeField] private DissociatingCube _cubePrefab;
+    [SerializeField] private Cube _cubePrefab;
 
-    private static Vector3 s_originalScale;
+    private Vector3 _originalScale;
     
-    private bool _isDividing;
     private float _dividingChance;
-
-    public bool IsDividing => _isDividing;
-
-    private static readonly System.Random _random = new();
 
     private void Start()
     {
-        s_originalScale = _cubePrefab.transform.localScale;
+        _originalScale = _cubePrefab.transform.localScale;
     }
     
-    public bool GetChance(Vector3 scale)
+    public bool IsDividing(Vector3 scale)
     {
-        _dividingChance = scale.x / s_originalScale.x;
-        _isDividing = _random.NextDouble() < _dividingChance;
+        _dividingChance = scale.x / _originalScale.x;
 
-        return _isDividing;
+        return Random.value < _dividingChance;
     }
 }
