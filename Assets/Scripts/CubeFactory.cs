@@ -12,7 +12,7 @@ public class CubeFactory : MonoBehaviour
         FillColors();
     }
 
-    public Cube Create(Vector3 scale, Manager divider, Vector3 position)
+    public Cube Create(Vector3 scale, Divider divider, Vector3 position)
     {
         Cube newCube = Instantiate(_cubePrefab, position, Quaternion.identity);
         newCube.transform.localScale = scale;
