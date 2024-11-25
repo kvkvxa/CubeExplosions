@@ -5,16 +5,19 @@ public class CubeFactory : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
 
-    private readonly List<Color> _colors = new List<Color>();
+    private readonly List<Color> _colors = new();
 
     private void Start()
     {
         FillColors();
     }
 
-    public Cube Create(Vector3 scale, Divider divider, Vector3 position)
+    public Cube Create(Vector3 scale, Divider divider, Vector3 previousPosition)
     {
-        Cube newCube = Instantiate(_cubePrefab, position, Quaternion.identity);
+        Vector3 randomOffset = Random.insideUnitSphere * 0.5f;
+        Vector3 newPosition = previousPosition + randomOffset;
+
+        Cube newCube = Instantiate(_cubePrefab, newPosition, Quaternion.identity);
         newCube.transform.localScale = scale;
 
         Renderer renderer = newCube.Renderer;

@@ -5,16 +5,21 @@ public class Divider : MonoBehaviour
     [SerializeField] private DividingChanceCalculator _dividingChanceCalculator;
     [SerializeField] private CubeFactory _cubeFactory;
     [SerializeField] private Cube _firstCube;
-    [SerializeField]private Exploder _exploder;
+    [SerializeField] private Exploder _exploder;
 
     private float _scaleDivider = 2f;
 
     private int _minCubes = 2;
     private int _maxCubes = 6;
 
-    private void Start()
+    private void Awake()
     {
         _firstCube.Clicked += Divide;
+    }
+
+    private void OnDestroy()
+    {
+        _firstCube.Clicked -= Divide;
     }
 
     public void Init(Cube cube)
@@ -36,17 +41,12 @@ public class Divider : MonoBehaviour
             for (int i = 0; i < cubesCount; i++)
             {
                 Cube newCube = _cubeFactory.Create(newScale, this, position);
-
-                _exploder.ApplyExplosionForce(newCube);
             }
         }
 
+        _exploder.ApplyExplosionForce(cube);
+
         cube.Clicked -= Divide;
         Destroy(cube.gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        _firstCube.Clicked -= Divide;
     }
 }
