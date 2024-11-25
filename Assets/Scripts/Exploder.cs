@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class Exploder : MonoBehaviour
 {
-    private float _explosionForce = 5f;
-    private float _explosionRadius = 5f;
+    private float _generalExplosionForce = 3f;
+    private float _generalExplosionRadius = 3f;
 
     public void ApplyExplosionForce(Cube cube)
     {
         Vector3 explosionCenter = cube.transform.position;
         float scaleDependentMultiplier = 1 / cube.transform.localScale.x;
 
-        _explosionRadius *= scaleDependentMultiplier;
-        _explosionForce *= scaleDependentMultiplier;
+        float individualExplosionRadius = _generalExplosionRadius * scaleDependentMultiplier;
+        float individualExplosionForce = _generalExplosionForce * scaleDependentMultiplier;
 
-        Collider[] colliders = Physics.OverlapSphere(explosionCenter, _explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(explosionCenter, individualExplosionRadius);
 
         foreach (var collider in colliders)
         {
@@ -24,10 +24,10 @@ public class Exploder : MonoBehaviour
                 Vector3 explosionDirection = collider.transform.position - explosionCenter;
                 float distance = explosionDirection.magnitude;
 
-                float explosionFadeRatio = distance / _explosionRadius;
+                float explosionFadeRatio = distance / individualExplosionRadius;
 
                 explosionDirection.Normalize();
-                float force = Mathf.Lerp(_explosionForce, 0, explosionFadeRatio);
+                float force = Mathf.Lerp(individualExplosionForce, 0, explosionFadeRatio);
 
                 affectedObject.AddForce(explosionDirection * force, ForceMode.Impulse);
             }
