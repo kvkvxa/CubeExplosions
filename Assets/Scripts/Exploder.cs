@@ -5,7 +5,7 @@ public class Exploder : MonoBehaviour
     private float _generalExplosionForce = 3f;
     private float _generalExplosionRadius = 3f;
 
-    public void ApplyExplosionForce(Cube cube)
+    public void ApplyGlobalExplosionForce(Cube cube)
     {
         Vector3 explosionCenter = cube.transform.position;
         float scaleDependentMultiplier = 1 / cube.transform.localScale.x;
@@ -32,5 +32,11 @@ public class Exploder : MonoBehaviour
                 affectedObject.AddForce(explosionDirection * force, ForceMode.Impulse);
             }
         }
+    }
+
+    public void ApplyLocalExplosionForce(Cube cube)
+    {
+        Vector3 explosionDirection = Random.onUnitSphere;
+        cube.Rigidbody.AddForce(explosionDirection * _generalExplosionForce, ForceMode.Impulse);
     }
 }

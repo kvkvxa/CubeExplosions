@@ -12,7 +12,7 @@ public class CubeFactory : MonoBehaviour
         FillColors();
     }
 
-    public Cube Create(Vector3 scale, Divider divider, Vector3 previousPosition)
+    public Cube Create(Vector3 scale, Vector3 previousPosition)
     {
         Vector3 randomOffset = Random.insideUnitSphere * 0.5f;
         Vector3 newPosition = previousPosition + randomOffset;
@@ -21,13 +21,7 @@ public class CubeFactory : MonoBehaviour
         newCube.transform.localScale = scale;
 
         Renderer renderer = newCube.Renderer;
-
-        if (renderer != null)
-        {
-            renderer.material.color = GetRandomColor();
-        }
-
-        divider.Init(newCube);
+        renderer.material.color = GetRandomColor();
 
         return newCube;
     }

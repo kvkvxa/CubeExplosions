@@ -6,18 +6,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
-    private Renderer _renderer;
+    [field: SerializeField]
+    public Rigidbody Rigidbody { get; private set; }
+
+    [field: SerializeField]
+    public Renderer Renderer { get; private set; }
 
     public event Action<Cube> Clicked;
 
-    public Rigidbody Rigidbody => _rigidbody;
-    public Renderer Renderer => _renderer;
-
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _renderer = GetComponent<Renderer>();
+        Rigidbody = GetComponent<Rigidbody>();
+        Renderer = GetComponent<Renderer>();
     }
 
     private void OnMouseDown()

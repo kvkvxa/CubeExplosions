@@ -40,11 +40,15 @@ public class Divider : MonoBehaviour
         {
             for (int i = 0; i < cubesCount; i++)
             {
-                Cube newCube = _cubeFactory.Create(newScale, this, position);
+                Cube newCube = _cubeFactory.Create(newScale, position);
+                Init(newCube);
+                _exploder.ApplyLocalExplosionForce(newCube);
             }
         }
-
-        _exploder.ApplyExplosionForce(cube);
+        else
+        {
+            _exploder.ApplyGlobalExplosionForce(cube);
+        }
 
         cube.Clicked -= Divide;
         Destroy(cube.gameObject);
